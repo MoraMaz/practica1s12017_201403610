@@ -13,7 +13,7 @@ public class Lista {
         Tamano = 0;
     }
     
-    public void Insertar (String Ficha, int Posicion){
+    public void Insertar (Ficha Ficha, int Posicion){
         if(getTamano() != 7){
             if(getTamano() == 0){
                 Inicio = new NodoSimple(Ficha, null);
@@ -49,7 +49,7 @@ public class Lista {
     public boolean Existe(String Ficha){
         NodoSimple x = Inicio;
         for(int i = 1; i <= getTamano(); i++){
-            if(x.getFicha().equals(Ficha)){
+            if(x.getFicha().getLetra().equals(Ficha)){
                 return true;
             }
         }
@@ -60,7 +60,7 @@ public class Lista {
         if(Existe(Ficha)){
             NodoSimple x = Inicio;
             for(int i = 1; i <= getTamano(); i++){
-                if(x.getFicha().equals(Ficha)){
+                if(x.getFicha().getLetra().equals(Ficha)){
                     return x;
                 }
             }
@@ -71,7 +71,7 @@ public class Lista {
     public void Eliminar(String Ficha){
         if(Existe(Ficha)){
             NodoSimple x = Inicio;
-            while(!x.getSiguiente().getFicha().equals(Ficha)){
+            while(!x.getSiguiente().getFicha().getLetra().equals(Ficha)){
                 x = x.getSiguiente();
             }
             x.setSiguiente(x.getSiguiente().getSiguiente());

@@ -15,7 +15,8 @@ public class Cola {
         Tamano = 0;
     }
 
-    public void Insertar(String Ficha, int Posicion) {
+    public void Insertar(String Letra) {
+        Ficha Ficha = new Ficha(Letra, 1);
         if (getTamano() == 0) {
             Inicio = new NodoSimple(Ficha, null);
             Fin = Inicio;
@@ -29,7 +30,7 @@ public class Cola {
     public boolean Existe(String Ficha) {
         NodoSimple x = Inicio;
         for (int i = 1; i <= getTamano(); i++) {
-            if (x.getFicha().equals(Ficha)) {
+            if (x.getFicha().getLetra().equals(Ficha)) {
                 return true;
             }
         }
@@ -40,7 +41,7 @@ public class Cola {
         if (Existe(Ficha)) {
             NodoSimple x = Inicio;
             for (int i = 1; i <= getTamano(); i++) {
-                if (x.getFicha().equals(Ficha)) {
+                if (x.getFicha().getLetra().equals(Ficha)) {
                     return x;
                 }
             }
@@ -48,8 +49,8 @@ public class Cola {
         return null;
     }
 
-    public NodoSimple SacarInico(String Ficha) {
-        if (Existe(Ficha)) {
+    public NodoSimple SacarInico() {
+        if (getTamano() != 0) {
             NodoSimple aC = Inicio;
             Inicio = Inicio.getSiguiente();
             Tamano--;

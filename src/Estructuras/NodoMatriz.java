@@ -5,15 +5,38 @@ package Estructuras;
  * @author Lenovo
  */
 public class NodoMatriz {
-    private String Letra;
-    private int Bonus, Posx, Poxy;
+    private Ficha Letra;
+    private int Bonus, Posx, Posy;
     private NodoMatriz Izquierda, Derecha, Arriba, Abajo;
 
-    public NodoMatriz(String Letra, int Bonus, int Posx, int Poxy, NodoMatriz Izquierda, NodoMatriz Derecha, NodoMatriz Arriba, NodoMatriz Abajo) {
+    public NodoMatriz() {
+        this.Letra = null;
+        this.Bonus = 1;
+        this.Posx = -1;
+        this.Posy = -1;
+        this.Izquierda = null;
+        this.Derecha = null;
+        this.Arriba = null;
+        this.Abajo = null;
+    }
+
+    public NodoMatriz(int x, int y) {
+        this.Letra = null;
+        this.Bonus = 0;
+        this.Posx = x;
+        this.Posy = y;
+        this.Izquierda = null;
+        this.Derecha = null;
+        this.Arriba = null;
+        this.Abajo = null;
+    }
+
+    
+    public NodoMatriz(Ficha Letra, int Bonus, int Posx, int Posy, NodoMatriz Izquierda, NodoMatriz Derecha, NodoMatriz Arriba, NodoMatriz Abajo) {
         this.Letra = Letra;
         this.Bonus = Bonus;
         this.Posx = Posx;
-        this.Poxy = Poxy;
+        this.Posy = Posy;
         this.Izquierda = Izquierda;
         this.Derecha = Derecha;
         this.Arriba = Arriba;
@@ -23,14 +46,14 @@ public class NodoMatriz {
     /**
      * @return the Letra
      */
-    public String getLetra() {
+    public Ficha getLetra() {
         return Letra;
     }
 
     /**
      * @param Letra the Letra to set
      */
-    public void setLetra(String Letra) {
+    public void setLetra(Ficha Letra) {
         this.Letra = Letra;
     }
 
@@ -63,17 +86,17 @@ public class NodoMatriz {
     }
 
     /**
-     * @return the Poxy
+     * @return the Posy
      */
-    public int getPoxy() {
-        return Poxy;
+    public int getPosy() {
+        return Posy;
     }
 
     /**
-     * @param Poxy the Poxy to set
+     * @param Posy the Poxy to set
      */
-    public void setPoxy(int Poxy) {
-        this.Poxy = Poxy;
+    public void setPosy(int Posy) {
+        this.Posy = Posy;
     }
 
     /**
@@ -131,7 +154,5 @@ public class NodoMatriz {
     public void setAbajo(NodoMatriz Abajo) {
         this.Abajo = Abajo;
     }
-
     
-   
 }

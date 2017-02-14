@@ -5,10 +5,10 @@ package Estructuras;
  * @author Lenovo
  */
 public class NodoSimple {
-    private String Ficha;
+    private Ficha Ficha;
     private NodoSimple Siguiente;
 
-    public NodoSimple(String Ficha, NodoSimple Siguiente) {
+    public NodoSimple(Ficha Ficha, NodoSimple Siguiente) {
         this.Ficha = Ficha;
         this.Siguiente = Siguiente;
     }
@@ -16,14 +16,14 @@ public class NodoSimple {
     /**
      * @return the Ficha
      */
-    public String getFicha() {
+    public Ficha getFicha() {
         return Ficha;
     }
 
     /**
      * @param Ficha the Ficha to set
      */
-    public void setFicha(String Ficha) {
+    public void setFicha(Ficha Ficha) {
         this.Ficha = Ficha;
     }
 
