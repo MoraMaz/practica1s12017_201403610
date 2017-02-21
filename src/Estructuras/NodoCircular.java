@@ -7,7 +7,7 @@ package Estructuras;
 public class NodoCircular {
     private String Nombre;
     private NodoCircular Siguiente;
-    private Lista Fichas;
+    private ListaSimple Fichas;
 
     public NodoCircular(String Nombre, NodoCircular Siguiente) {
         this.Nombre = Nombre;
@@ -46,14 +46,14 @@ public class NodoCircular {
     /**
      * @return the Fichas
      */
-    public Lista getFichas() {
+    public ListaSimple getFichas() {
         return Fichas;
     }
 
     /**
      * @param Fichas the Fichas to set
      */
-    public void setFichas(Lista Fichas) {
+    public void setFichas(ListaSimple Fichas) {
         this.Fichas = Fichas;
     }
     

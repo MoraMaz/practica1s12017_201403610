@@ -8,6 +8,10 @@ public class Matriz {
     private NodoMatriz NodoCeroCero;
     private int Dimension;
 
+    public Matriz() {
+        this.NodoCeroCero = null;
+    }
+
     public Matriz(int Dimension) {
         this.Dimension = Dimension;
         this.Generar();
@@ -23,12 +27,12 @@ public class Matriz {
                     NodoCeroCero = vecino;
                     aux = NodoCeroCero;
                 }else if(i == aux.getPosx()){
-                    vecino.setIzquierda(aux);
-                    aux.setDerecha(vecino);
-                    aux = vecino;
-                }else if(j == aux.getPosy()){
                     vecino.setArriba(aux);
                     aux.setAbajo(vecino);
+                    aux = vecino;
+                }else if(j == aux.getPosy()){
+                    vecino.setIzquierda(aux);
+                    aux.setDerecha(vecino);
                     aux = vecino;
                 }
                 if(i == getDimension() - 1){
@@ -39,6 +43,31 @@ public class Matriz {
                     }
                 }
             }
+        }
+    }
+
+    private NodoMatriz Buscar(int Posx, int Posy) {
+        NodoMatriz Recorrido = NodoCeroCero;
+        while(Recorrido.getAbajo() != null){
+            if(Posy == Recorrido.getPosy()){
+                while(Recorrido.getDerecha() != null){
+                    if(Posx == Recorrido.getPosx()){
+                        return Recorrido;
+                    }
+                    Recorrido = Recorrido.getDerecha();
+                }
+            }
+            Recorrido = Recorrido.getAbajo();
+        }
+        return null;
+    }
+    
+    public void InsertarBonus(int Posx, int Posy, int Bonus){
+        NodoMatriz encontrado = Buscar(Posx, Posy);
+        if(encontrado != null){
+            encontrado.setBonus(Bonus);
+        }else{
+            System.out.println("Nodo de la matriz no encontrado.");
         }
     }
 

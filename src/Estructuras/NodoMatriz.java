@@ -1,10 +1,12 @@
 package Estructuras;
 
+import javax.swing.JButton;
+
 /**
  *
  * @author Lenovo
  */
-public class NodoMatriz {
+public class NodoMatriz extends JButton {
     private Ficha Letra;
     private int Bonus, Posx, Posy;
     private NodoMatriz Izquierda, Derecha, Arriba, Abajo;
@@ -22,7 +24,7 @@ public class NodoMatriz {
 
     public NodoMatriz(int x, int y) {
         this.Letra = null;
-        this.Bonus = 0;
+        this.Bonus = 1;
         this.Posx = x;
         this.Posy = y;
         this.Izquierda = null;
@@ -30,7 +32,6 @@ public class NodoMatriz {
         this.Arriba = null;
         this.Abajo = null;
     }
-
     
     public NodoMatriz(Ficha Letra, int Bonus, int Posx, int Posy, NodoMatriz Izquierda, NodoMatriz Derecha, NodoMatriz Arriba, NodoMatriz Abajo) {
         this.Letra = Letra;
