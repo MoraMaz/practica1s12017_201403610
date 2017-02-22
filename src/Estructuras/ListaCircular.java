@@ -1,32 +1,43 @@
 package Estructuras;
 
+import java.io.*;
+
 /**
  *
  * @author Lenovo
  */
 public class ListaCircular {
+    
+    private final Cola TodasLasFichas;
     public NodoCircular Inicial;
     private int Tamano;
-    public ListaCircular() {
-        Inicial = null;
-        Tamano = 0;
+    
+    public ListaCircular(Cola TodasLasFichas) {
+        this.TodasLasFichas = TodasLasFichas;
+        this.Inicial = null;
+        this.Tamano = 0;
     }
     
-    public void Insertar(String nombre){
+    public boolean Insertar(String nombre){
         if(getTamano() == 0){
             Inicial = new NodoCircular(nombre, null);
             Inicial.setSiguiente(Inicial);
-        }else{
+            Tamano++;
+            ObtenerFichas(Inicial);
+            return true;
+        }else if(!Existe(nombre)){
             NodoCircular x, n;
             n = new NodoCircular(nombre, Inicial);
+            ObtenerFichas(n);
             x = Inicial;
             while(x.getSiguiente() != Inicial){
                 x = x.getSiguiente();
             }
             x.setSiguiente(n);
-            x.setSiguiente(Inicial);
+            Tamano++;
+            return true;
         }
-        Tamano++;
+        return false;
     }
     
     public boolean Existe(String nombre){
@@ -37,6 +48,14 @@ public class ListaCircular {
             }
         }
         return false;
+    }
+
+    private void ObtenerFichas(NodoCircular Jugador) {
+        ListaSimple Fichas = new ListaSimple();
+        for (int i = 0; i < 7; i++) {
+            Fichas.Insertar(TodasLasFichas.Sacar().getFicha());
+        }
+        Jugador.setFichas(Fichas);
     }
     
     public NodoCircular Obtener(String nombre){
@@ -62,12 +81,38 @@ public class ListaCircular {
         }
     }
     
-    public String Graficar(){
-        StringBuilder Grafo_dot = new StringBuilder("");
-        Grafo_dot.append("");
-        return Grafo_dot.toString();
+    public void Graficar(){
+        StringBuilder Grafo_dot = new StringBuilder("digraph G\n{\n");
+        try {
+            File archivo = new File("src/Reportes/LC.graphviz");
+            NodoCircular aux = Inicial;
+            int contador = 0;
+            do{
+                Grafo_dot.append("\tNode").append(contador).append("[label=\"").append(aux.getNombre()).append("\"];\n");
+                aux = aux.getSiguiente();
+                contador++;
+            }while(aux != Inicial);
+            Grafo_dot.append("\n");
+            aux = Inicial;
+            contador = 0;
+            do{
+                if(aux.getSiguiente() == Inicial){
+                    Grafo_dot.append("\tNode").append(contador).append(" -> Node").append(0).append(" [label=\"Siguiente\"];\n");
+                }else {
+                    Grafo_dot.append("\tNode").append(contador).append(" -> Node").append(contador + 1).append(" [label=\"Siguiente\"];\n");
+                }
+                aux = aux.getSiguiente();
+                contador++;
+            }while(aux != Inicial);
+            Grafo_dot.append("}");
+            FileOutputStream codigo = new FileOutputStream(archivo);
+            codigo.write(Grafo_dot.toString().getBytes());
+            Runtime.getRuntime().exec("C:/Program Files (x86)/Graphviz 2.28/bin/dot.exe -Tjpg src/Reportes/LC.graphviz -o src/Reportes/LC.jpg");
+        } catch (Exception e) {
+            System.out.println("No se ha graficado.");
+        }
     }
-
+    
     /**
      * @return the Tamano
      */

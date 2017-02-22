@@ -1,12 +1,10 @@
 package Estructuras;
 
-import javax.swing.JButton;
-
 /**
  *
  * @author Lenovo
  */
-public class NodoMatriz extends JButton {
+public class NodoMatriz {
     private Ficha Letra;
     private int Bonus, Posx, Posy;
     private NodoMatriz Izquierda, Derecha, Arriba, Abajo;

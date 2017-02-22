@@ -1,5 +1,7 @@
 package Estructuras;
 
+import java.io.*;
+
 /**
  *
  * @author Lenovo
@@ -10,9 +12,9 @@ public class Cola {
     private int Tamano;
 
     public Cola() {
-        Inicio = null;
-        Fin = null;
-        Tamano = 0;
+        this.Inicio = null;
+        this.Fin = null;
+        this.Tamano = 0;
     }
 
     public void Insertar(String Letra) {
@@ -49,20 +51,42 @@ public class Cola {
         return null;
     }
 
-    public NodoSimple SacarInico() {
+    public NodoSimple Sacar() {
         if (getTamano() != 0) {
             NodoSimple aC = Inicio;
-            Inicio = Inicio.getSiguiente();
+            Inicio = aC.getSiguiente();
             Tamano--;
             return aC;
         }
         return null;
     }
     
-    public String Graficar(){
-        StringBuilder Grafo_dot = new StringBuilder("");
-        Grafo_dot.append("");
-        return Grafo_dot.toString();
+    public void Graficar(){
+        StringBuilder Grafo_dot = new StringBuilder("digraph G\n{\n");
+        try {
+            File archivo = new File("src/Reportes/C.graphviz");
+            NodoSimple aux = Inicio;
+            int contador = 0;
+            do{
+                Grafo_dot.append("\tNode").append(contador).append("[label=\"").append(aux.getFicha().getLetra()).append("\"];\n");
+                aux = aux.getSiguiente();
+                contador++;
+            }while(aux != null);
+            Grafo_dot.append("\n");
+            aux = Inicio;
+            contador = 0;
+            do{
+                Grafo_dot.append("\tNode").append(contador).append(" -> Node").append(contador + 1).append(" [label=\"Siguiente\"];\n");
+                aux = aux.getSiguiente();
+                contador++;
+            }while(aux.getSiguiente() != null);
+            Grafo_dot.append("}");
+            FileOutputStream codigo = new FileOutputStream(archivo);
+            codigo.write(Grafo_dot.toString().getBytes());
+            Runtime.getRuntime().exec( "C:/Program Files (x86)/Graphviz 2.28/bin/dot.exe -Tjpg src/Reportes/C.graphviz -o src/Reportes/C.jpg" );
+        } catch (Exception e) {
+            System.out.println("No se ha graficado.");
+        }
     }
 
     /**

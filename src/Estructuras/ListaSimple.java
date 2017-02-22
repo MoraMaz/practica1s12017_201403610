@@ -1,5 +1,7 @@
 package Estructuras;
 
+import java.io.*;
+
 /**
  *
  * @author Lenovo
@@ -16,7 +18,7 @@ public class ListaSimple {
     public void Insertar(Ficha Ficha, int Posicion){
         if(getTamano() != 7){
             if(getTamano() == 0){
-                Inicio = new NodoSimple(Ficha, null);
+                setInicio(new NodoSimple(Ficha, null));
             }else{
                 NodoSimple n;
                 switch (Posicion) {
@@ -29,7 +31,7 @@ public class ListaSimple {
                         break;
                     case 0: //Agregar al inicio
                         n = new NodoSimple(Ficha, getInicio());
-                        Inicio = n;
+                        setInicio(n);
                         break;
                     default: //Agregar en una posición específica
                         NodoSimple x = getInicio();
@@ -48,7 +50,7 @@ public class ListaSimple {
     
     public void Insertar(Ficha Ficha){
         if(getTamano() == 0){
-            Inicio = new NodoSimple(Ficha, null);
+            setInicio(new NodoSimple(Ficha, null));
         }else{
             NodoSimple n = getInicio();
             while(n.getSiguiente() != null){
@@ -85,7 +87,7 @@ public class ListaSimple {
         if(Existe(Letra)){
             NodoSimple x = getInicio();
             if(x.getFicha().getLetra().equalsIgnoreCase(Letra)){
-                Inicio = getInicio().getSiguiente();
+                setInicio(getInicio().getSiguiente());
             }else{
                 while(!x.getSiguiente().getFicha().getLetra().equalsIgnoreCase(Letra)){
                     x = x.getSiguiente();
@@ -96,10 +98,32 @@ public class ListaSimple {
         }
     }
     
-    public String Graficar(){
-        StringBuilder Grafo_dot = new StringBuilder("");
-        Grafo_dot.append("");
-        return Grafo_dot.toString();
+    public void Graficar(){
+        StringBuilder Grafo_dot = new StringBuilder("digraph G\n{\n");
+        try {
+            File archivo = new File("src/Reportes/LS.graphviz");
+            NodoSimple aux = getInicio();
+            int contador = 0;
+            do{
+                Grafo_dot.append("\tNode").append(contador).append("[label=\"").append(aux.getFicha().getLetra()).append("\"];\n");
+                aux = aux.getSiguiente();
+                contador++;
+            }while(aux != null);
+            Grafo_dot.append("\n");
+            aux = getInicio();
+            contador = 0;
+            do{
+                Grafo_dot.append("\tNode").append(contador).append(" -> Node").append(contador + 1).append(" [label=\"Siguiente\"];\n");
+                aux = aux.getSiguiente();
+                contador++;
+            }while(aux.getSiguiente() != null);
+            Grafo_dot.append("}");
+            FileOutputStream codigo = new FileOutputStream(archivo);
+            codigo.write(Grafo_dot.toString().getBytes());
+            Runtime.getRuntime().exec("C:/Program Files (x86)/Graphviz 2.28/bin/dot.exe -Tjpg src/Reportes/LS.graphviz -o src/Reportes/LS.jpg");
+        } catch (Exception e) {
+            System.out.println("No se ha graficado.");
+        }
     }
 
     /**
@@ -114,5 +138,12 @@ public class ListaSimple {
      */
     public NodoSimple getInicio() {
         return Inicio;
+    }
+
+    /**
+     * @param Inicio the Inicio to set
+     */
+    public void setInicio(NodoSimple Inicio) {
+        this.Inicio = Inicio;
     }
 }
